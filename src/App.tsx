@@ -26,12 +26,13 @@ export const Layout = styled(Box)(({ theme }) => ({
 
 const HeroSection = styled(Box)(({ theme }) => ({
   backgroundImage: `url(${`${import.meta.env.BASE_URL}images/bg-image.jpg`})`,
-  // backgroundRepeat: "no-repeat",
-  // backgroundSize: "cover",
-  // backgroundPosition: "center center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+  backgroundPosition: "center center",
   display: "flex",
-  // alignItems: "center",
+  alignItems: "center",
   justifyContent: "flex-start",
+  height: "40vh",
 
   padding: theme.spacing(4),
 
@@ -53,11 +54,10 @@ const HeroText = styled(Typography)(({ theme }) => ({
   fontFamily: "Staatliches",
   textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)",
   lineHeight: 1.2,
-  textAlign: "left", 
+  textAlign: "left",
   maxWidth: "100%",
   width: "100%",
 
-  
   fontSize: "1.5rem",
 
   [theme.breakpoints.up("sm")]: {
@@ -74,24 +74,22 @@ const HeroText = styled(Typography)(({ theme }) => ({
 }));
 
 const GradientButton = styled(Button)(({ theme }) => ({
- background: "linear-gradient(90deg, #f43f5e 0%, #b91c1c 100%)",
+  background: "linear-gradient(90deg, #f43f5e 0%, #b91c1c 100%)",
   color: "#fff",
-  padding: theme.spacing(1, 3),
   fontWeight: 600,
   textTransform: "none",
   borderRadius: theme.shape.borderRadius,
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
   transition: "all 0.3s ease",
-  fontSize: "0.875rem", // default for xs
-  
+
 
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(1.5, 4),
-    fontSize: "1rem",
+    fontSize: "1px",
   },
 
   [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(1.5, 5),
+    // padding: theme.spacing(1.5, 5),
     fontSize: "1.125rem",
   },
 
@@ -111,17 +109,21 @@ function App() {
             <Box>In-shop And Mobile</Box>
             <Box>Locksmith Services,</Box>
             <Box>Since 1998</Box>
-            <a href="tel:+94774380935" style={{ textDecoration: "none" }}>
-              <GradientButton >Call +94 77 438 0935</GradientButton>
-            </a>
+            <Box my={3}>
+              <a href="tel:+94774380935" style={{ textDecoration: "none" }}>
+                <GradientButton size="small">
+                  Call +94 77 438 0935
+                </GradientButton>
+              </a>
+            </Box>
           </HeroText>
         </HeroSection>
         <OurServices />
         <PhotoGallery />
         <FullSkeleton />
-        <Map/>
+        <Map />
         <ContactForm />
-        <Footer/>
+        <Footer />
       </Box>
     </Layout>
   );
