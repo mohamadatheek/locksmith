@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Grid,
   styled,
   Typography,
 } from "@mui/material";
@@ -14,6 +15,7 @@ import { FullSkeleton } from "./components/FullSkeleton";
 import { Footer } from "./components/Footer";
 import { Map } from "./components/Map";
 import { useState, useEffect } from "react";
+import { About, SubHeading } from "./components/About";
 
 export const Layout = styled(Box)(({ theme }) => ({
   overflow: "auto",
@@ -106,7 +108,7 @@ const GradientButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Heading = styled(Typography)(({ theme }) => ({
+export const Heading = styled(Typography)(({ theme }) => ({
   fontFamily: "Staatliches",
   color: "#ffffff", // or any color you prefer
   marginBottom: theme.spacing(4),
@@ -162,6 +164,7 @@ function App() {
               </Box>
             </HeroText>
           </HeroSection>
+
           <Box py={4} color={"#e2dbdbff"} bgcolor={"#665f67"}>
             <Box p={3}>
               <Heading textAlign={"center"}>
@@ -180,10 +183,39 @@ function App() {
               </Typography>
             </Box>
           </Box>
+          <Box py={4} bgcolor={"#000000"} color={"#ffffff"}>
+            <Grid spacing={2} container>
+              <Grid size={{ xs: 6, md: 4 }}>
+                <Box textAlign={"center"}>
+                  <Box fontWeight={"bold"} component={Typography} variant="h1">
+                    25
+                  </Box>
+                  <SubHeading>Experiance</SubHeading>
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 6, md: 4 }}>
+                <Box textAlign={"center"}>
+                  <Box fontWeight={"bold"} component={Typography} variant="h1">
+                    5000+
+                  </Box>
+                  <SubHeading>Project Completed</SubHeading>
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 6, md: 4 }}>
+                <Box textAlign={"center"}>
+                  <Box fontWeight={"bold"} component={Typography} variant="h1">
+                    3
+                  </Box>
+                  <SubHeading>Branches</SubHeading>
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
           <OurServices />
           <PhotoGallery />
           <FullSkeleton />
           <Map />
+          <About />
           <ContactForm />
           <Footer />
         </Box>
