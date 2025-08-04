@@ -1,4 +1,11 @@
-import { Box, Button, styled, Typography } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  styled,
+  Typography,
+} from "@mui/material";
 import TopAppBar from "./components/AppBat";
 import { OurServices } from "./components/OurServices";
 import { PhotoGallery } from "./components/PhotoGallery";
@@ -6,6 +13,7 @@ import { ContactForm } from "./components/ContactForm";
 import { FullSkeleton } from "./components/FullSkeleton";
 import { Footer } from "./components/Footer";
 import { Map } from "./components/Map";
+import { useState, useEffect } from "react";
 
 export const Layout = styled(Box)(({ theme }) => ({
   overflow: "auto",
@@ -116,44 +124,71 @@ const Heading = styled(Typography)(({ theme }) => ({
 }));
 
 function App() {
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOpen(false);
+    }, 3000); // 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <Layout>
-      <Box>
-        <TopAppBar />
-        <HeroSection>
-          <HeroText>
-            <Box>In-shop And Mobile</Box>
-            <Box>Locksmith Services,</Box>
-            <Box>Since 1998</Box>
-            <Box my={3}>
-              <a href="tel:+94774380935" style={{ textDecoration: "none" }}>
-                <GradientButton size="small">
-                  Call +94 77 438 0935
-                </GradientButton>
-              </a>
+    <>
+      <Backdrop
+        open={open}
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Layout>
+        <Box>
+          <TopAppBar />
+          <HeroSection>
+            <HeroText>
+              <Box>In-shop And Mobile</Box>
+              <Box>Locksmith Services,</Box>
+              <Box>Since 1998</Box>
+              <Box my={3}>
+                <a href="tel:+94774380935" style={{ textDecoration: "none" }}>
+                  <GradientButton size="small">
+                    Call +94 77 438 0935
+                  </GradientButton>
+                </a>
+              </Box>
+            </HeroText>
+          </HeroSection>
+          <Box py={4} color={"#e2dbdbff"} bgcolor={"#665f67"}>
+            <Box p={3}>
+              <Heading textAlign={"center"}>
+                Your Trusted Automotive Locksmith Specialists
+              </Heading>
+              <Typography
+                textAlign={"center"}
+                variant="subtitle2"
+                fontSize={20}
+              >
+                we specialize in <strong>car key programming</strong> and
+                provide fast, reliable locksmith services tailored to your
+                automotive needs. Whether you’ve lost your car key, need a
+                spare, or are facing key fob or transponder issues, our skilled
+                technicians are here to help—anytime, anywhere.
+              </Typography>
             </Box>
-          </HeroText>
-        </HeroSection>
-        <Box py={4} color={'#e2dbdbff'} bgcolor={"#665f67"}>
-          <Box p={3}>
-            <Heading textAlign={"center"}>Your Trusted Automotive Locksmith Specialists</Heading>
-            <Typography textAlign={"center"} variant="subtitle2" fontSize={20}>
-              we specialize in <strong>car key programming</strong> and provide
-              fast, reliable locksmith services tailored to your automotive
-              needs. Whether you’ve lost your car key, need a spare, or are
-              facing key fob or transponder issues, our skilled technicians are
-              here to help—anytime, anywhere.
-            </Typography>
           </Box>
+          <OurServices />
+          <PhotoGallery />
+          <FullSkeleton />
+          <Map />
+          <ContactForm />
+          <Footer />
         </Box>
-        <OurServices />
-        <PhotoGallery />
-        <FullSkeleton />
-        <Map />
-        <ContactForm />
-        <Footer />
-      </Box>
-    </Layout>
+      </Layout>
+    </>
   );
 }
 export default App;
