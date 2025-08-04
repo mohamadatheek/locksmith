@@ -231,8 +231,8 @@ function App() {
           style={{
             backgroundColor: "#25D366",
             position: "fixed",
-            bottom: 50,
-            right: 50,
+            bottom: 16,
+            right: 16,
             zIndex: 1000,
           }}
           onClick={handleClick}
