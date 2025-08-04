@@ -58,10 +58,10 @@ export const PhotoGallery = () => {
   };
 
   return (
-    <Box p={4}>
+    <Box py={4}>
       <Layout>
         <GalleryHeading>
-          Our Key Duplication Gallery – Trusted by Hundreds
+          Our Key Duplication Gallery
         </GalleryHeading>
 
         <Box>

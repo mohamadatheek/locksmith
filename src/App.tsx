@@ -82,7 +82,6 @@ const GradientButton = styled(Button)(({ theme }) => ({
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
   transition: "all 0.3s ease",
 
-
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(1.5, 4),
     fontSize: "1px",
@@ -96,6 +95,23 @@ const GradientButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     background: "linear-gradient(90deg, #b91c1c 0%, #f43f5e 100%)",
     boxShadow: "0 6px 14px rgba(0, 0, 0, 0.4)",
+  },
+}));
+
+const Heading = styled(Typography)(({ theme }) => ({
+  fontFamily: "Staatliches",
+  color: "#ffffff", // or any color you prefer
+  marginBottom: theme.spacing(4),
+  fontSize: "2rem",
+  margin: 0,
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "2.5rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "3.0rem",
+  },
+  [theme.breakpoints.up("lg")]: {
+    fontSize: "3.5rem",
   },
 }));
 
@@ -118,6 +134,18 @@ function App() {
             </Box>
           </HeroText>
         </HeroSection>
+        <Box py={4} color={'#e2dbdbff'} bgcolor={"#665f67"}>
+          <Box p={3}>
+            <Heading>Your Trusted Automotive Locksmith Specialists</Heading>
+            <Typography textAlign={"center"} variant="subtitle2" fontSize={20}>
+              we specialize in <strong>car key programming</strong> and provide
+              fast, reliable locksmith services tailored to your automotive
+              needs. Whether you’ve lost your car key, need a spare, or are
+              facing key fob or transponder issues, our skilled technicians are
+              here to help—anytime, anywhere.
+            </Typography>
+          </Box>
+        </Box>
         <OurServices />
         <PhotoGallery />
         <FullSkeleton />

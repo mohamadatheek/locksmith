@@ -1,6 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
 
-
 import { styled } from "@mui/material/styles";
 
 const Image = styled("img")({
@@ -34,7 +33,7 @@ const GalleryHeading = styled(Typography)(({ theme }) => ({
   color: "#000", // or any color you prefer
   marginBottom: theme.spacing(4),
   fontSize: "2rem",
-
+  margin: 0,
   [theme.breakpoints.up("sm")]: {
     fontSize: "2.5rem",
   },
@@ -88,7 +87,7 @@ const data = {
 
 export const OurServices = () => {
   return (
-    <Box p={4}>
+    <Box >
       <Layout>
         <Box py={2}>
           <GalleryHeading>Our Services</GalleryHeading>
@@ -97,7 +96,11 @@ export const OurServices = () => {
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Box>
-                <Image src={`${import.meta.env.BASE_URL}images/services-01-free-img.jpg`} />
+                <Image
+                  src={`${
+                    import.meta.env.BASE_URL
+                  }images/services-01-free-img.jpg`}
+                />
               </Box>
               <Box>
                 <GallerySubheading>Automotive</GallerySubheading>
@@ -117,7 +120,6 @@ export const OurServices = () => {
                       m: 0,
                       p: 0,
                       listStyle: "none",
-
                     }}
                   >
                     <Typography variant="subtitle2" fontSize={19}>
@@ -129,7 +131,11 @@ export const OurServices = () => {
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Box>
-                <Image src={`${import.meta.env.BASE_URL}images/services-02-free-img.jpg`} />
+                <Image
+                  src={`${
+                    import.meta.env.BASE_URL
+                  }images/services-02-free-img.jpg`}
+                />
               </Box>
               <Box>
                 <GallerySubheading>Residential</GallerySubheading>
@@ -149,7 +155,6 @@ export const OurServices = () => {
                       m: 0,
                       p: 0,
                       listStyle: "none",
-
                     }}
                   >
                     <Typography variant="subtitle2" fontSize={19}>
@@ -161,7 +166,11 @@ export const OurServices = () => {
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Box>
-                <Image src={`${import.meta.env.BASE_URL}images/services-03-free-img.jpg`} />
+                <Image
+                  src={`${
+                    import.meta.env.BASE_URL
+                  }images/services-03-free-img.jpg`}
+                />
               </Box>
               <Box>
                 <GallerySubheading>Commercial</GallerySubheading>
