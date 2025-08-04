@@ -26,11 +26,11 @@ export const Layout = styled(Box)(({ theme }) => ({
 
 const HeroSection = styled(Box)(({ theme }) => ({
   backgroundImage: `url(${`${import.meta.env.BASE_URL}images/bg-image.jpg`})`,
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  backgroundPosition: "center center",
+  // backgroundRepeat: "no-repeat",
+  // backgroundSize: "cover",
+  // backgroundPosition: "center center",
   display: "flex",
-  alignItems: "center",
+  // alignItems: "center",
   justifyContent: "flex-start",
 
   padding: theme.spacing(4),
@@ -74,14 +74,27 @@ const HeroText = styled(Typography)(({ theme }) => ({
 }));
 
 const GradientButton = styled(Button)(({ theme }) => ({
-  background: "linear-gradient(90deg, #f43f5e 0%, #b91c1c 100%)", 
+ background: "linear-gradient(90deg, #f43f5e 0%, #b91c1c 100%)",
   color: "#fff",
-  padding: theme.spacing(1.5, 4),
+  padding: theme.spacing(1, 3),
   fontWeight: 600,
   textTransform: "none",
   borderRadius: theme.shape.borderRadius,
   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
   transition: "all 0.3s ease",
+  fontSize: "0.875rem", // default for xs
+  
+
+  [theme.breakpoints.up("sm")]: {
+    padding: theme.spacing(1.5, 4),
+    fontSize: "1rem",
+  },
+
+  [theme.breakpoints.up("md")]: {
+    padding: theme.spacing(1.5, 5),
+    fontSize: "1.125rem",
+  },
+
   "&:hover": {
     background: "linear-gradient(90deg, #b91c1c 0%, #f43f5e 100%)",
     boxShadow: "0 6px 14px rgba(0, 0, 0, 0.4)",
@@ -99,7 +112,7 @@ function App() {
             <Box>Locksmith Services,</Box>
             <Box>Since 1998</Box>
             <a href="tel:+94774380935" style={{ textDecoration: "none" }}>
-              <GradientButton size="large">Call +94 77 438 0935</GradientButton>
+              <GradientButton >Call +94 77 438 0935</GradientButton>
             </a>
           </HeroText>
         </HeroSection>
