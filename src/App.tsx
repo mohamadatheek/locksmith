@@ -136,7 +136,7 @@ function App() {
         </HeroSection>
         <Box py={4} color={'#e2dbdbff'} bgcolor={"#665f67"}>
           <Box p={3}>
-            <Heading>Your Trusted Automotive Locksmith Specialists</Heading>
+            <Heading textAlign={"center"}>Your Trusted Automotive Locksmith Specialists</Heading>
             <Typography textAlign={"center"} variant="subtitle2" fontSize={20}>
               we specialize in <strong>car key programming</strong> and provide
               fast, reliable locksmith services tailored to your automotive
