@@ -87,7 +87,7 @@ const data = {
 
 export const OurServices = () => {
   return (
-    <Box >
+    <Box p={4}>
       <Layout>
         <Box py={2}>
           <GalleryHeading>Our Services</GalleryHeading>

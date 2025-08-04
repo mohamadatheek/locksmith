@@ -58,7 +58,7 @@ export const PhotoGallery = () => {
   };
 
   return (
-    <Box py={4}>
+    <Box p={4}>
       <Layout>
         <GalleryHeading>
           Our Key Duplication Gallery

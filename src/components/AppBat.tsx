@@ -23,7 +23,7 @@ export default function TopAppBar() {
         height={"50px"}
       >
         <Box
-          fontSize={16}
+          fontSize={13}
           fontWeight={"bold"}
           component={Typography}
           variant="subtitle2"
@@ -31,7 +31,7 @@ export default function TopAppBar() {
           ALWAYS OPEN! We work 24/7
         </Box>
         <Box
-          fontSize={16}
+          fontSize={13}
           fontWeight={"bold"}
           component={Typography}
           variant="subtitle2"
