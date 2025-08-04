@@ -185,7 +185,7 @@ function App() {
           </Box>
           <Box py={4} bgcolor={"#000000"} color={"#ffffff"}>
             <Grid spacing={2} container>
-              <Grid size={{ xs: 6, md: 4 }}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <Box textAlign={"center"}>
                   <Box fontWeight={"bold"} component={Typography} variant="h1">
                     25
@@ -193,7 +193,7 @@ function App() {
                   <SubHeading>Experiance</SubHeading>
                 </Box>
               </Grid>
-              <Grid size={{ xs: 6, md: 4 }}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <Box textAlign={"center"}>
                   <Box fontWeight={"bold"} component={Typography} variant="h1">
                     5000+
@@ -201,7 +201,7 @@ function App() {
                   <SubHeading>Project Completed</SubHeading>
                 </Box>
               </Grid>
-              <Grid size={{ xs: 6, md: 4 }}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <Box textAlign={"center"}>
                   <Box fontWeight={"bold"} component={Typography} variant="h1">
                     3
