@@ -14,6 +14,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+// import { Helmet } from "react-helmet-async";
 
 export const Heading = styled(Typography)(({ theme }) => ({
   fontFamily: "Staatliches",
@@ -51,6 +52,14 @@ export const SubHeading = styled(Typography)(({ theme }) => ({
 export const About = () => {
   return (
     <Box p={4}>
+      {/* <Helmet>
+        <title>About Us - RapidLock Locksmith</title>
+        <meta
+          name="description"
+          content="Serving Your Security Needs Since 1998 in Maharagama, Sri Lanka"
+        />
+      </Helmet> */}
+
       <Heading>About Us</Heading>
       <Heading>Welcome to KeyHome Locksmith Services</Heading>
       <SubHeading>Serving Your Security Needs Since 1998</SubHeading>
@@ -61,19 +70,21 @@ export const About = () => {
         need a spare key, or want to upgrade to the latest smart key systems,
         we’ve got you covered.
       </Typography>
-      <Typography fontWeight={'bold'} variant="h5">Our Services Include:</Typography>
+      <Typography fontWeight={"bold"} variant="h5">
+        Our Services Include:
+      </Typography>
       <List>
         <ListItem>
           <ListItemIcon>
             <TerminalOutlined />
           </ListItemIcon>
-          <ListItemText>Smart key programming for modern vehicles</ListItemText>
+          <ListItemText>Car key programming </ListItemText>
         </ListItem>
         <ListItem>
           <ListItemIcon>
             <KeyOutlined />
           </ListItemIcon>
-          <ListItemText>Traditional key cutting and duplication</ListItemText>
+          <ListItemText>cutting and duplication</ListItemText>
         </ListItem>
         <ListItem>
           <ListItemIcon>
@@ -86,6 +97,12 @@ export const About = () => {
             <MemoryOutlined />
           </ListItemIcon>
           <ListItemText>Key writing and chip key solutions</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>
+            <MemoryOutlined />
+          </ListItemIcon>
+          <ListItemText>Emergency car unlocking</ListItemText>
         </ListItem>
       </List>
       <Grid container spacing={2}>
