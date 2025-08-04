@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Fab,
   Grid,
   styled,
   Typography,
@@ -16,6 +17,7 @@ import { Footer } from "./components/Footer";
 import { Map } from "./components/Map";
 import { useState, useEffect } from "react";
 import { About, SubHeading } from "./components/About";
+import { WhatsApp } from "@mui/icons-material";
 
 export const Layout = styled(Box)(({ theme }) => ({
   overflow: "auto",
@@ -135,6 +137,10 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
+  const phoneNumber = "+94774380935";
+  const handleClick = () => {
+    window.open(`https://wa.me/${phoneNumber}`, "_blank");
+  };
 
   return (
     <>
@@ -219,6 +225,20 @@ function App() {
           <ContactForm />
           <Footer />
         </Box>
+        <Fab
+          color="inherit"
+          aria-label="add"
+          style={{
+            backgroundColor: "#25D366",
+            position: "fixed",
+            bottom: 50,
+            right: 50,
+            zIndex: 1000,
+          }}
+          onClick={handleClick}
+        >
+          <WhatsApp sx={{ color: "#ffffff" }} />
+        </Fab>
       </Layout>
     </>
   );
