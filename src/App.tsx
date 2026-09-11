@@ -1,246 +1,70 @@
-import {
-  Backdrop,
-  Box,
-  Button,
-  CircularProgress,
-  Fab,
-  Grid,
-  styled,
-  Typography,
-} from "@mui/material";
-import TopAppBar from "./components/AppBat";
-import { OurServices } from "./components/OurServices";
-import { PhotoGallery } from "./components/PhotoGallery";
-import { ContactForm } from "./components/ContactForm";
-import { FullSkeleton } from "./components/FullSkeleton";
-import { Footer } from "./components/Footer";
-import { Map } from "./components/Map";
-import { useState, useEffect } from "react";
-import { About, SubHeading } from "./components/About";
-import { WhatsApp } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
+import "./App.css";
 
-export const Layout = styled(Box)(({ theme }) => ({
-  overflow: "auto",
-  width: "100%",
-  minHeight: "100vh",
-  margin: "0 auto",
+const phoneDisplay = "+94 77 438 0935";
+const phoneLink = "+94774380935";
+const services = [
+  { icon: "CAR", title: "Automotive locksmith", text: "Lost keys, lockouts, key cutting and replacement for cars of all makes.", image: "/images/optimized/service-auto.webp" },
+  { icon: "KEY", title: "Key programming", text: "Transponder keys, smart keys and remotes programmed with specialist equipment.", image: "/images/optimized/service-programming.webp" },
+  { icon: "24/7", title: "Emergency assistance", text: "Fast mobile support across Colombo when you need access restored urgently.", image: "/images/optimized/service-emergency.webp" },
+];
+const gallery = [1, 3, 7, 10, 14, 18, 25, 29, 2, 8, 16, 24];
 
-  [theme.breakpoints.down("sm")]: {},
+function PhoneIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.2a11 11 0 0 0 3.4.5c.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1a11 11 0 0 0 .5 3.4c.1.4 0 .8-.2 1.2l-2.2 2.2Z"/></svg>;
+}
 
-  [theme.breakpoints.up("md")]: {},
-
-  [theme.breakpoints.up("lg")]: {},
-
-  [theme.breakpoints.up("xl")]: {
-    maxWidth: "1140px",
-  },
-}));
-
-const HeroSection = styled(Box)(({ theme }) => ({
-  backgroundImage: `url(${`${import.meta.env.BASE_URL}images/bg-image.jpg`})`,
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  backgroundPosition: "center center",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start",
-  height: "40vh",
-
-  padding: theme.spacing(4),
-
-  [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(6),
-  },
-
-  [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(8),
-  },
-
-  [theme.breakpoints.up("lg")]: {
-    padding: theme.spacing(10),
-  },
-}));
-
-const HeroText = styled(Typography)(({ theme }) => ({
-  color: "#ffffff",
-  fontFamily: "Staatliches",
-  textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)",
-  lineHeight: 1.2,
-  textAlign: "left",
-  maxWidth: "100%",
-  width: "100%",
-
-  fontSize: "1.5rem",
-
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "2.5rem",
-  },
-
-  [theme.breakpoints.up("md")]: {
-    fontSize: "3rem",
-  },
-
-  [theme.breakpoints.up("lg")]: {
-    fontSize: "3.6875rem",
-  },
-}));
-
-const GradientButton = styled(Button)(({ theme }) => ({
-  background: "linear-gradient(90deg, #f43f5e 0%, #b91c1c 100%)",
-  color: "#fff",
-  fontWeight: 600,
-  textTransform: "none",
-  borderRadius: theme.shape.borderRadius,
-  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-  transition: "all 0.3s ease",
-
-  [theme.breakpoints.up("sm")]: {
-    padding: theme.spacing(1.5, 4),
-    fontSize: "1px",
-  },
-
-  [theme.breakpoints.up("md")]: {
-    // padding: theme.spacing(1.5, 5),
-    fontSize: "1.125rem",
-  },
-
-  "&:hover": {
-    background: "linear-gradient(90deg, #b91c1c 0%, #f43f5e 100%)",
-    boxShadow: "0 6px 14px rgba(0, 0, 0, 0.4)",
-  },
-}));
-
-export const Heading = styled(Typography)(({ theme }) => ({
-  fontFamily: "Staatliches",
-  color: "#ffffff", // or any color you prefer
-  marginBottom: theme.spacing(4),
-  fontSize: "2rem",
-  margin: 0,
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "2.5rem",
-  },
-  [theme.breakpoints.up("md")]: {
-    fontSize: "3.0rem",
-  },
-  [theme.breakpoints.up("lg")]: {
-    fontSize: "3.5rem",
-  },
-}));
+function WhatsAppIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.3-6.1-3.5-8.4Zm-8.3 18.2c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.7-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.3 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4Z"/></svg>;
+}
 
 function App() {
-  const [open, setOpen] = useState(true);
-
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setOpen(false);
-    }, 3000); // 3 seconds
-
-    return () => clearTimeout(timer);
+    const items = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    if (!("IntersectionObserver" in window)) { items.forEach(item => item.classList.add("revealed")); return; }
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add("revealed"); observer.unobserve(entry.target); }
+    }), { rootMargin: "0px 0px -8%", threshold: 0.08 });
+    items.forEach(item => observer.observe(item));
+    return () => observer.disconnect();
   }, []);
-  const phoneNumber = "+94774380935";
-  const handleClick = () => {
-    window.open(`https://wa.me/${phoneNumber}`, "_blank");
+  const submitEnquiry = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const message = ["Hello KeyHome, I would like locksmith assistance.", `Name: ${form.get("name")}`, `Phone: ${form.get("phone")}`, `Service: ${form.get("service")}`, `Message: ${form.get("message")}`].join("\n");
+    window.open(`https://wa.me/${phoneLink}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+    setSent(true);
   };
+  const closeMenu = () => setMenuOpen(false);
 
-  return (
-    <>
-      <Backdrop
-        open={open}
-        sx={{
-          color: "#fff",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-        }}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Layout>
-        <Box>
-          <TopAppBar />
-          <HeroSection>
-            <HeroText>
-              <Box>In-shop And Mobile</Box>
-              <Box>Locksmith Services,</Box>
-              <Box>Since 1998</Box>
-              <Box my={3}>
-                <a href="tel:+94774380935" style={{ textDecoration: "none" }}>
-                  <GradientButton size="small">
-                    Call +94 77 438 0935
-                  </GradientButton>
-                </a>
-              </Box>
-            </HeroText>
-          </HeroSection>
-
-          <Box py={4} color={"#e2dbdbff"} bgcolor={"#665f67"}>
-            <Box p={3}>
-              <Heading textAlign={"center"}>
-                Your Trusted Automotive Locksmith Specialists
-              </Heading>
-              <Typography
-                textAlign={"center"}
-                variant="subtitle2"
-                fontSize={20}
-              >
-                we specialize in <strong>car key programming</strong> and
-                provide fast, reliable locksmith services tailored to your
-                automotive needs. Whether you’ve lost your car key, need a
-                spare, or are facing key fob or transponder issues, our skilled
-                technicians are here to help—anytime, anywhere.
-              </Typography>
-            </Box>
-          </Box>
-          <Box py={4} bgcolor={"#000000"} color={"#ffffff"}>
-            <Grid spacing={2} container>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Box textAlign={"center"}>
-                  <Box fontWeight={"bold"} component={Typography} variant="h1">
-                    25
-                  </Box>
-                  <SubHeading>Experiance</SubHeading>
-                </Box>
-              </Grid>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Box textAlign={"center"}>
-                  <Box fontWeight={"bold"} component={Typography} variant="h1">
-                    5000+
-                  </Box>
-                  <SubHeading>Project Completed</SubHeading>
-                </Box>
-              </Grid>
-              <Grid size={{ xs: 12, md: 4 }}>
-                <Box textAlign={"center"}>
-                  <Box fontWeight={"bold"} component={Typography} variant="h1">
-                    3
-                  </Box>
-                  <SubHeading>Branches</SubHeading>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-          <OurServices />
-          <PhotoGallery />
-          <FullSkeleton />
-          <Map />
-          <About />
-          <ContactForm />
-          <Footer />
-        </Box>
-        <Fab
-          color="inherit"
-          aria-label="add"
-          style={{
-            backgroundColor: "#25D366",
-            position: "fixed",
-            bottom: 16,
-            right: 16,
-            zIndex: 1000,
-          }}
-          onClick={handleClick}
-        >
-          <WhatsApp sx={{ color: "#ffffff" }} />
-        </Fab>
-      </Layout>
-    </>
-  );
+  return <>
+    <a className="skip-link" href="#main">Skip to content</a>
+    <div className="topbar"><div className="shell topbar-inner"><span><span className="status-dot" />Available 24 hours, 7 days a week</span><a href={`tel:${phoneLink}`}><PhoneIcon /> Emergency: {phoneDisplay}</a></div></div>
+    <header className="site-header"><div className="shell nav-wrap">
+      <a className="brand" href="#top" aria-label="KEYHOME LOCKSMITH SPECIALISTS"><img src="/images/optimized/logo.webp" width="52" height="52" alt="" /><span><b>KEYHOME</b><small>LOCKSMITH SPECIALISTS</small></span></a>
+      <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen(!menuOpen)}><span /><span /><span /><span className="sr-only">Menu</span></button>
+      <nav id="site-nav" className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation"><a onClick={closeMenu} href="#services">Services</a><a onClick={closeMenu} href="#work">Our work</a><a onClick={closeMenu} href="#about">About</a><a onClick={closeMenu} href="#contact">Contact</a><a className="nav-cta" href={`tel:${phoneLink}`}><PhoneIcon /> Call now</a></nav>
+    </div></header>
+    <main id="main">
+      <section id="top" className="hero"><div className="hero-shade" /><div className="shell hero-content"><p className="eyebrow"><span /> Trusted in Colombo since 1998</p><h1>Your key problem.<br /><em>Solved today.</em></h1><p className="hero-copy">Fast, professional automotive locksmith services—in our shop or wherever your vehicle is.</p><div className="hero-actions"><a className="button primary" href={`tel:${phoneLink}`}><PhoneIcon /> Call {phoneDisplay}</a><a className="button secondary" href="#services">Explore services <span aria-hidden="true">↓</span></a></div><div className="trust-row" aria-label="Service assurances"><span>✓ 24/7 response</span><span>✓ Mobile service</span><span>✓ 27+ years</span></div></div></section>
+      <section className="proof" aria-label="Business highlights"><div className="shell proof-grid"><div><strong>27+</strong><span>Years of expertise</span></div><div><strong>5,000+</strong><span>Jobs completed</span></div><div><strong>3</strong><span>Convenient branches</span></div><div><strong>24/7</strong><span>Emergency response</span></div></div></section>
+      <section className="answer-hub" aria-labelledby="quick-answers-title"><div className="shell" data-reveal><div className="answer-intro"><p className="kicker">Quick answers</p><h2 id="quick-answers-title">Need a locksmith in Colombo?</h2><p>KeyHome is a 24-hour automotive locksmith based in Maharagama, serving Colombo and nearby suburbs with mobile car unlocking, key cutting, replacement keys, smart-key repair and car key programming.</p></div><div className="answer-grid"><article><h3>Who can program a car key near me?</h3><p>KeyHome programs transponder keys, remote fobs and proximity smart keys for many vehicle makes in Colombo. Call with the make, model and year to confirm support.</p></article><article><h3>Can a locksmith open my car without damage?</h3><p>A trained auto locksmith uses specialist entry methods selected for the vehicle. KeyHome prioritizes careful, damage-conscious car door unlocking.</p></article><article><h3>What information should I provide?</h3><p>Share your location, vehicle make, model, year, key type and whether every key is lost. Proof of ownership may be requested before vehicle-key work begins.</p></article></div></div></section>
+      <section id="services" className="section services"><div className="shell"><div className="section-heading" data-reveal><div><p className="kicker">What we do</p><h2>Specialist help, without the wait.</h2></div><p>From a spare key to an urgent lockout, our experienced technicians get you moving safely and quickly.</p></div><div className="service-grid">{services.map((service,index) => <article className="service-card" data-reveal style={{transitionDelay:`${index * 90}ms`}} key={service.title}><img src={service.image} width="420" height="300" loading="lazy" alt="" /><div className="service-body"><span className="service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><a href="#contact">Request this service <span aria-hidden="true">→</span></a></div></article>)}</div><div className="service-list">{['Car lockout assistance','Key replacement & duplication','Ignition repair','Smart key programming','Broken key extraction','Lock repair & replacement'].map(item => <span key={item}>✓ {item}</span>)}</div></div></section>
+      <section className="section expertise"><div className="shell" data-reveal><div className="section-heading"><div><p className="kicker">Complete key solutions</p><h2>Automotive locksmith expertise for modern vehicles.</h2></div><p>Looking for car key programming or key cutting near you? Our Colombo specialists combine precision cutting with current programming and diagnostic equipment.</p></div><div className="content-grid"><article><span>01</span><h3>Lost car key programming</h3><p>Lost your only key or need a dependable spare? We cut and program replacement car keys for many Japanese, European and Korean vehicle makes.</p></article><article><span>02</span><h3>Smart key repair & programming</h3><p>We diagnose and program proximity smart keys, remote fobs and transponder chip keys, including all-keys-lost situations where supported.</p></article><article><span>03</span><h3>Car door unlock service</h3><p>Locked your keys inside the vehicle? Call our mobile auto locksmith team for careful, damage-conscious car door unlocking assistance.</p></article><article><span>04</span><h3>Key and lock repair service</h3><p>We diagnose worn keys, damaged remotes, ignition problems and vehicle door-lock faults before recommending the right key repair or lock repair.</p></article></div><div className="vehicle-note"><strong>Toyota key programming and multi-brand support</strong><p>Contact us for Toyota smart keys, remotes and transponder key programming, or to check support for your specific vehicle make, model and year.</p></div></div></section>
+      <section id="about" className="section about"><div className="shell about-grid" data-reveal><div className="about-image"><img src="/images/optimized/about.webp" width="620" height="760" loading="lazy" alt="A newly programmed vehicle key beside a car" /><div className="experience"><strong>27+</strong><span>YEARS<br />EXPERIENCE</span></div></div><div className="about-copy"><p className="kicker">Why KeyHome</p><h2>Experience you can trust. Technology you can rely on.</h2><p>Since 1998, KeyHome has helped drivers and property owners across Colombo solve lock and key problems with care, precision and modern equipment.</p><ul><li><b>Advanced equipment</b><span>Programming and diagnostics for modern vehicle systems.</span></li><li><b>Skilled technicians</b><span>Decades of practical experience across leading makes.</span></li><li><b>Clear, honest service</b><span>Helpful advice and straightforward pricing before work begins.</span></li></ul><a className="text-link" href="#contact">Talk to a specialist <span aria-hidden="true">→</span></a></div></div></section>
+      <section id="work" className="section work"><div className="shell"><div className="section-heading" data-reveal><div><p className="kicker">Photo gallery</p><h2>Keys made. Problems solved.</h2></div><p>Real automotive key programming and duplication work completed by the KeyHome team across Sri Lanka.</p></div><div className="gallery">{gallery.map((n,index) => <figure key={n} className={index === 0 || index === 5 ? "wide" : ""} data-reveal><button type="button" onClick={() => setSelectedPhoto(index)} aria-label={`View completed automotive key job ${index + 1}`}><img src={`/images/optimized/gallery-${n}.webp`} width="560" height="420" loading="lazy" alt={`Completed automotive key programming job ${index + 1}`} /><span aria-hidden="true">View photo</span></button></figure>)}</div></div></section>
+      <section className="section areas"><div className="shell areas-grid" data-reveal><div><p className="kicker light">Mobile locksmith coverage</p><h2>Your local car key solution near Colombo.</h2><p>Searching for a locksmith near you, car key repair nearby or an urgent door lock open service? Contact KeyHome for availability in Maharagama, Nugegoda, Dehiwala, Kottawa, Boralesgamuwa, Homagama, Pannipitiya and surrounding Colombo suburbs.</p><a className="button primary" href={`tel:${phoneLink}`}><PhoneIcon /> Check availability</a></div><div className="area-list">{['Maharagama','Nugegoda','Dehiwala','Kottawa','Boralesgamuwa','Homagama','Pannipitiya','Colombo'].map(area => <span key={area}>{area}</span>)}</div></div></section>
+      <section className="section faq"><div className="shell faq-grid"><div data-reveal><p className="kicker">Helpful answers</p><h2>Car key & locksmith FAQs.</h2><p>Quick answers to common questions about replacement keys, programming and emergency service.</p></div><div className="faq-list" data-reveal><details><summary>Can you make a replacement when all car keys are lost?</summary><p>For many vehicles, yes. The process depends on the make, model, year and immobilizer system. Send us those details so we can confirm the correct solution.</p></details><details><summary>Do you provide mobile car key programming in Colombo?</summary><p>Yes. Mobile assistance is available across Colombo and nearby suburbs, subject to technician and equipment availability.</p></details><details><summary>Can you program smart keys and remote key fobs?</summary><p>We work with transponder keys, remote fobs and proximity smart keys for many popular vehicle brands. Call with your vehicle details to check compatibility.</p></details><details><summary>What should I do if my key is locked inside my car?</summary><p>Call our 24/7 line and share your location and vehicle model. Avoid forcing the door or window, as this can cause expensive damage.</p></details><details><summary>How long does car key duplication take?</summary><p>Timing varies by key type and vehicle. A simple duplicate may be completed quickly, while smart-key programming and diagnostic work can take longer.</p></details></div></div></section>
+      <section id="contact" className="section contact"><div className="shell contact-grid"><div className="contact-copy"><p className="kicker light">Need help now?</p><h2>Let’s get you back on the road.</h2><p>Call for an immediate response or send the details below. Your enquiry will open securely in WhatsApp, ready for you to review and send.</p><a className="phone-large" href={`tel:${phoneLink}`}><span><PhoneIcon /></span><small>CALL OUR 24/7 LINE</small><b>{phoneDisplay}</b></a><div className="contact-meta"><p><b>Visit us</b><span>Maharagama, Colombo, Sri Lanka</span></p><p><b>Opening hours</b><span>Open 24 hours, every day</span></p></div></div><form className="contact-form" onSubmit={submitEnquiry}><h3>Request assistance</h3><label>Full name<input name="name" autoComplete="name" required placeholder="Your name" /></label><label>Phone number<input name="phone" type="tel" autoComplete="tel" required placeholder="07X XXX XXXX" /></label><label>Service needed<select name="service" defaultValue=""><option value="" disabled>Select a service</option><option>Car lockout assistance</option><option>Key replacement or duplication</option><option>Key programming</option><option>Ignition or lock repair</option><option>Other</option></select></label><label>How can we help?<textarea name="message" rows={4} required placeholder="Tell us the vehicle model and what happened" /></label><button className="button primary form-button" type="submit">Continue in WhatsApp <span aria-hidden="true">→</span></button>{sent && <p className="form-note" role="status">WhatsApp opened with your message. Review it there, then tap Send.</p>}</form></div></section>
+    </main>
+    <footer><div className="shell footer-grid"><a className="brand footer-brand" href="#top"><img src="/images/optimized/logo.webp" width="48" height="48" alt="" /><span><b>KEYHOME</b><small>LOCKSMITH SPECIALISTS</small></span></a><p>Professional automotive and general locksmith services, available 24/7 in Colombo.</p><nav aria-label="Footer navigation"><a href="#services">Services</a><a href="#work">Our work</a><a href="#about">About</a><a href="#contact">Contact</a></nav></div><div className="shell copyright"><span>© {new Date().getFullYear()} KeyHome. All rights reserved.</span><span>Serving Colombo since 1998.</span></div></footer>
+    {selectedPhoto !== null && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`Photo ${selectedPhoto + 1} of ${gallery.length}`} onClick={() => setSelectedPhoto(null)} onKeyDown={event => { if (event.key === "Escape") setSelectedPhoto(null); }}><button autoFocus className="lightbox-close" type="button" onClick={() => setSelectedPhoto(null)} aria-label="Close photo viewer">×</button><button className="lightbox-arrow previous" type="button" onClick={event => { event.stopPropagation(); setSelectedPhoto((selectedPhoto - 1 + gallery.length) % gallery.length); }} aria-label="Previous photo">‹</button><img onClick={event => event.stopPropagation()} src={`/images/optimized/gallery-${gallery[selectedPhoto]}.webp`} alt={`Completed automotive key programming job ${selectedPhoto + 1}`} /><button className="lightbox-arrow next" type="button" onClick={event => { event.stopPropagation(); setSelectedPhoto((selectedPhoto + 1) % gallery.length); }} aria-label="Next photo">›</button><p>{selectedPhoto + 1} / {gallery.length}</p></div>}
+    <a className="floating-call" href={`tel:${phoneLink}`} aria-label="Call now"><PhoneIcon /><span>Call now</span></a>
+    <a className="floating-whatsapp" href={`https://wa.me/${phoneLink}?text=${encodeURIComponent("Hello KeyHome, I need locksmith assistance.")}`} target="_blank" rel="noopener noreferrer" aria-label="Chat with KeyHome on WhatsApp"><WhatsAppIcon /><span>WhatsApp</span></a>
+  </>;
 }
 export default App;
