@@ -16,6 +16,8 @@ export default defineConfig({
         smartKeyRepair: resolve(__dirname, "smart-key-repair/index.html"),
         keyCutting: resolve(__dirname, "key-cutting-maharagama/index.html"),
         toyotaProgramming: resolve(__dirname, "toyota-key-programming/index.html"),
+        lockRepair: resolve(__dirname, "lock-repair-colombo/index.html"),
+        householdUnlocking: resolve(__dirname, "door-unlocking-colombo/index.html"),
       },
     },
   },

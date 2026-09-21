@@ -4,33 +4,84 @@ import { renderToString } from "react-dom/server";
 import { createElement } from "react";
 import { createServer } from "vite";
 
-const server = await createServer({ server: { middlewareMode: true }, appType: "custom" });
+const origin = "https://keyhome.lk";
+const server = await createServer({ server: { middlewareMode: true, hmr: false, ws: false }, appType: "custom" });
+const escape = value => String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+const json = value => JSON.stringify(value).replaceAll("<", "\\u003c");
 
 try {
   const marker = '<div id="root"></div>';
   const { default: App } = await server.ssrLoadModule("/src/App.tsx");
   const { default: ServicePage } = await server.ssrLoadModule("/src/ServicePage.tsx");
-  const pages = [
-    ["index.html", createElement(App)],
-    ...[
-      "car-key-programming-colombo",
-      "car-key-replacement-colombo",
-      "emergency-car-unlocking",
-      "smart-key-repair",
-      "key-cutting-maharagama",
-      "toyota-key-programming",
-    ].map((slug) => [`${slug}/index.html`, createElement(ServicePage, { slug })]),
-  ];
-
-  for (const [page, element] of pages) {
-    const output = resolve("dist", page);
-    const html = await readFile(output, "utf8");
-    if (!html.includes(marker)) throw new Error(`Root marker not found in ${page}`);
-    const markup = renderToString(element);
-    await writeFile(output, html.replace(marker, `<div id="root">${markup}</div>`));
+  const { services } = await server.ssrLoadModule("/src/services.ts");
+  const { serviceGuides } = await server.ssrLoadModule("/src/serviceGuides.ts");
+  const { serviceNavigation } = await server.ssrLoadModule("/src/serviceNavigation.ts");
+  const { business } = await server.ssrLoadModule("/src/business.ts");
+  const slugs = serviceNavigation.map(item => item.slug);
+  if (slugs.length !== Object.keys(services).length || slugs.some(slug => !services[slug] || !serviceGuides[slug])) {
+    throw new Error("Service content and navigation do not match");
   }
-
-  console.log(`Prerendered ${pages.length} HTML pages`);
+  const businessSchema = {
+    "@type": "Locksmith", "@id": origin + "/#business",
+    name: business.name, url: origin + "/", telephone: business.phone,
+    image: origin + "/images/optimized/logo.webp",
+    description: "Key cutting, car key programming, vehicle lock repair and vehicle or household door unlocking in the Colombo area.",
+    address: { "@type": "PostalAddress", addressLocality: business.locality, addressRegion: "Colombo", addressCountry: "LK" },
+    areaServed: business.areas.map(name => ({ "@type": "Place", name })),
+    hasOfferCatalog: {
+      "@type": "OfferCatalog", name: "KeyHome locksmith services",
+      itemListElement: slugs.map(slug => ({
+        "@type": "Offer", itemOffered: { "@type": "Service", name: services[slug].title, url: origin + "/" + slug + "/" },
+      })),
+    },
+  };
+  for (const slug of ["", ...slugs]) {
+    const output = resolve("dist", slug, "index.html");
+    let html = await readFile(output, "utf8");
+    if (!html.includes(marker)) throw new Error("Root marker not found: " + output);
+    const element = slug ? createElement(ServicePage, { slug }) : createElement(App);
+    html = html.replace(marker, '<div id="root">' + renderToString(element) + "</div>");
+    if (slug) {
+      const service = services[slug];
+      const description = serviceGuides[slug].description;
+      const title = service.title + " | KeyHome";
+      const url = origin + "/" + slug + "/";
+      html = html.replace(/<title>[\s\S]*?<\/title>/, "<title>" + escape(title) + "</title>")
+        .replace(/<meta (?:name|property)="(?:description|og:[^"]+|twitter:[^"]+)"[^>]*>/g, "")
+        .replace(/<link rel="canonical"[^>]*>/g, "")
+        .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, "");
+      const graph = [
+        { "@type": "Service", "@id": url + "#service", name: service.title, description, url,
+          image: origin + service.image, areaServed: businessSchema.areaServed,
+          provider: { "@type": "Locksmith", "@id": origin + "/#business", name: business.name, url: origin + "/", telephone: business.phone } },
+        { "@type": "BreadcrumbList", itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: origin + "/" },
+          { "@type": "ListItem", position: 2, name: service.title, item: url },
+        ] },
+      ];
+      const tags = [
+        '<meta name="description" content="' + escape(description) + '" />',
+        '<link rel="canonical" href="' + url + '" />',
+        '<meta property="og:type" content="website" />',
+        '<meta property="og:locale" content="en_LK" />',
+        '<meta property="og:title" content="' + escape(title) + '" />',
+        '<meta property="og:description" content="' + escape(description) + '" />',
+        '<meta property="og:url" content="' + url + '" />',
+        '<meta property="og:image" content="' + origin + service.image + '" />',
+        '<meta name="twitter:card" content="summary_large_image" />',
+        '<script type="application/ld+json">' + json({ "@context": "https://schema.org", "@graph": graph }) + "</script>",
+      ];
+      html = html.replace("</head>", tags.join("\n") + "\n</head>");
+    } else {
+      html = html.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/, (_, source) => {
+        const schema = JSON.parse(source);
+        schema["@graph"] = schema["@graph"].map(item => item["@type"] === "Locksmith" ? businessSchema : item);
+        return '<script type="application/ld+json">' + json(schema) + "</script>";
+      });
+    }
+    await writeFile(output, html);
+  }
+  console.log("Prerendered " + (slugs.length + 1) + " pages with consistent service metadata");
 } finally {
   await server.close();
 }

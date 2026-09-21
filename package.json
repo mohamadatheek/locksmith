@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender-home.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender-home.mjs && node scripts/check-seo.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
