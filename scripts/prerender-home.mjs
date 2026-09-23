@@ -51,13 +51,20 @@ try {
         .replace(/<link rel="canonical"[^>]*>/g, "")
         .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, "");
       const graph = [
+        businessSchema,
+        { "@type": "WebPage", "@id": url + "#webpage", name: service.title, description, url,
+          isPartOf: { "@id": origin + "/#website" }, about: { "@id": url + "#service" },
+          breadcrumb: { "@id": url + "#breadcrumb" }, primaryImageOfPage: { "@type": "ImageObject", url: origin + service.image } },
         { "@type": "Service", "@id": url + "#service", name: service.title, description, url,
           image: origin + service.image, areaServed: businessSchema.areaServed,
-          provider: { "@type": "Locksmith", "@id": origin + "/#business", name: business.name, url: origin + "/", telephone: business.phone } },
-        { "@type": "BreadcrumbList", itemListElement: [
+          provider: { "@id": origin + "/#business" } },
+        { "@type": "BreadcrumbList", "@id": url + "#breadcrumb", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: origin + "/" },
           { "@type": "ListItem", position: 2, name: service.title, item: url },
         ] },
+        { "@type": "FAQPage", "@id": url + "#faq", mainEntity: service.faq.map(([question, answer]) => ({
+          "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer },
+        })) },
       ];
       const tags = [
         '<meta name="description" content="' + escape(description) + '" />',
@@ -76,6 +83,7 @@ try {
       html = html.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/, (_, source) => {
         const schema = JSON.parse(source);
         schema["@graph"] = schema["@graph"].map(item => item["@type"] === "Locksmith" ? businessSchema : item);
+        schema["@graph"].push({ "@type": "WebSite", "@id": origin + "/#website", url: origin + "/", name: business.name, inLanguage: "en-LK" });
         return '<script type="application/ld+json">' + json(schema) + "</script>";
       });
     }

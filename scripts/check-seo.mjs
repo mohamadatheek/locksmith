@@ -34,9 +34,18 @@ for (const url of urls) {
   if (pathname !== "/") {
     const service = schemas.find(item => item["@type"] === "Service");
     assert.equal(service?.url, url, url + ": missing or incorrect Service schema");
-    assert.equal(service.provider.telephone, "+94774380935", url + ": phone mismatch");
+    assert.equal(service.provider["@id"], origin + "/#business", url + ": provider mismatch");
+    const business = schemas.find(item => item["@type"] === "Locksmith");
+    assert.equal(business?.telephone, "+94774380935", url + ": phone mismatch");
+    const webpage = schemas.find(item => item["@type"] === "WebPage");
+    assert.equal(webpage?.url, url, url + ": missing or incorrect WebPage schema");
+    const faq = schemas.find(item => item["@type"] === "FAQPage");
+    assert(faq?.mainEntity.length >= 3, url + ": missing FAQ schema");
     const crumbs = schemas.find(item => item["@type"] === "BreadcrumbList");
     assert.equal(crumbs?.itemListElement.at(-1).item, url, url + ": breadcrumb mismatch");
+  } else {
+    const website = schemas.find(item => item["@type"] === "WebSite");
+    assert.equal(website?.url, origin + "/", url + ": missing WebSite schema");
   }
   for (const match of html.matchAll(/(?:src|href)="(\/[^"#?]+\.(?:webp|js|css))"/g)) {
     await access(resolve("dist", "." + match[1]));
