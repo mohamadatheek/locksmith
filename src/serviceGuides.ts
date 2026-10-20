@@ -6,7 +6,7 @@ type Guide = {
 
 export const serviceGuides: Record<string, Guide> = {
   "door-unlocking-colombo": {
-    description: "Household door unlocking in Colombo and nearby suburbs. Call KeyHome on 077 438 0935 with your location and lock details to confirm assistance.",
+    description: "Household door unlocking and door lock open service in Colombo. Call KeyHome on 074 120 3918 with your location and lock details.",
     sections: [
       { heading: "Describe the lockout before booking", text: "A door that has closed with keys inside, a lost key and a broken key in the lock can require different work. Tell us whether there is another authorized way to enter and describe the type of door. A clear photo of the lock can help with the initial assessment." },
       { heading: "Confirm the scope and attendance charge", text: "Ask about technician availability, the estimated arrival time and any attendance or assessment charge. The condition and design of the lock determine what work may be needed. Agree on the proposed approach before work starts, including whether replacement parts could be required." },
@@ -15,10 +15,10 @@ export const serviceGuides: Record<string, Guide> = {
     prepare: ["Your location and contact number", "Door and lock details, with a photo if possible", "Evidence of occupancy or the property owner’s authorization"],
   },
   "car-key-programming-colombo": {
-    description: "Car key and transponder programming in Colombo for supported remotes, smart keys and immobilizer keys. Contact KeyHome to check vehicle compatibility.",
+    description: "Car key, remote key and smart key programming in Colombo, including supported lost-key situations. Contact KeyHome to check compatibility.",
     sections: [
       { heading: "A cut key may still need programming", text: "A mechanical blade operates the lock, while a transponder communicates with the vehicle’s immobilizer. Car key reprogramming, keyless-entry remote programming and proximity functions may require different equipment. Tell us whether the problem is starting the engine, operating the buttons or unlocking the door so we can assess the right service." },
-      { heading: "Spare keys and all-keys-lost work", text: "Adding a spare while a working key is available can involve a different process from replacing every lost key. Equipment, compatible parts and access requirements vary by vehicle. We confirm support for your model and year before arranging the work; brand name alone does not establish compatibility." },
+      { heading: "Spare keys and lost smart key programming", text: "Adding a spare while a working key is available can involve a different process from replacing every lost key. Lost smart key programming depends on the vehicle, compatible parts and access requirements. We confirm support for your model and year before arranging the work; brand name alone does not establish compatibility." },
       { heading: "What affects a programming quote?", text: "The quote depends on the key type, whether a usable key remains, required replacement parts and whether mobile attendance is needed. Ask whether the quoted work includes the blade, remote, programming and testing. Share your location to check mobile availability in Colombo and nearby suburbs." },
     ],
     prepare: ["Vehicle make, model and year", "Whether you have a working key or all keys are lost", "Your location and proof you are authorized to request the work"],
@@ -33,7 +33,7 @@ export const serviceGuides: Record<string, Guide> = {
     prepare: ["Make, model and year of the vehicle", "Any remaining keys or damaged key components", "Vehicle access and proof of authorization"],
   },
   "emergency-car-unlocking": {
-    description: "Mobile car door unlock and vehicle lockout service in Colombo. Call KeyHome with your location and vehicle model to confirm availability.",
+    description: "Mobile car door unlock service and vehicle lockout help in Colombo. Call KeyHome with your location and vehicle model to confirm availability.",
     sections: [
       { heading: "Tell us exactly what is locked", text: "Keys inside the passenger area, keys in the boot and a key that will not turn can require different assessments. Give the vehicle make and model, its location and a description of the problem. This helps the technician decide what equipment and access may be needed." },
       { heading: "Confirm attendance before waiting", text: "Mobile availability depends on the technician, your location and the vehicle. Ask for an estimated arrival time and the attendance charge when you call. A response estimate is specific to the enquiry; traffic and the current workload can affect it." },
@@ -42,7 +42,7 @@ export const serviceGuides: Record<string, Guide> = {
     prepare: ["Your exact location and a nearby landmark", "Vehicle make, model and where the keys are", "Proof that you are authorized to access the vehicle"],
   },
   "smart-key-repair": {
-    description: "Smart key, remote car key and key-fob repair in Colombo. KeyHome assesses batteries, buttons, casings and electronic faults for supported keys.",
+    description: "Smart key repair and car-key remote repair in Colombo. KeyHome assesses batteries, buttons, casings and electronic faults for supported keys.",
     sections: [
       { heading: "Describe which functions have stopped working", text: "A remote that no longer locks the doors may still start the vehicle. A proximity key that is not detected can have a different fault from a broken casing or flat key-fob battery. Tell us whether a spare works and whether the issue started after a drop, moisture exposure or a battery change." },
       { heading: "Repair depends on the condition of the key", text: "The casing, buttons, battery contacts and electronics need assessment before a repair can be recommended. Compatible parts may not be available for every key. We assess whether repair is practical or whether a replacement key and programming should be considered." },
@@ -51,7 +51,7 @@ export const serviceGuides: Record<string, Guide> = {
     prepare: ["The faulty key and any working spare", "Vehicle make, model and year", "A description of the fault and when it started"],
   },
   "key-cutting-maharagama": {
-    description: "Key cutting and key duplication in Colombo from KeyHome in Maharagama. Car keys and supported general keys; call to confirm your key type.",
+    description: "Key cutting and key duplication in Colombo from an automotive and general key cutter in Maharagama. Call to confirm your key type.",
     sections: [
       { heading: "General keys and vehicle blades", text: "The correct blank must match the key and lock before a copy can be cut. Bring an existing key when available and confirm support for your key type before travelling. A worn or bent original needs assessment because copying its damage can leave the new key difficult to use." },
       { heading: "Car key cutting does not always include programming", text: "A new blade may operate the door but still need a transponder programmed before it starts the engine. Remote locking and smart-key functions are separate from the blade. Let us know whether you need a mechanical spare, a complete remote key or a replacement for all lost keys." },
@@ -69,7 +69,7 @@ export const serviceGuides: Record<string, Guide> = {
     prepare: ["Toyota model, year and key type", "Whether a working key remains", "Vehicle location and proof of authorization"],
   },
   "lock-repair-colombo": {
-    description: "Car lock and ignition lock repair in Colombo. Contact KeyHome about worn keys, sticking vehicle locks and broken-key extraction options.",
+    description: "Car lock repair service and ignition lock repair in Colombo. Contact KeyHome about worn keys, sticking locks and broken-key extraction.",
     sections: [
       { heading: "A key fault can look like a lock fault", text: "A worn blade, a damaged lock and an electronic remote problem can produce similar symptoms. Tell us whether the key inserts, turns and operates the door, and whether a spare behaves differently. Avoid forcing a sticking key, which can make the damage harder to assess." },
       { heading: "Door locks and ignition problems need different checks", text: "A key that will not turn in the ignition is different from an engine that turns over but will not start. Describe the symptom accurately when you contact us. Some starting faults require vehicle electrical or mechanical diagnosis beyond locksmith work." },

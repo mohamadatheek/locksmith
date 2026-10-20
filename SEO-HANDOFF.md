@@ -2,7 +2,7 @@
 
 ## Confirmed by the owner
 
-- Public phone: **077 438 0935** (+94 77 438 0935).
+- Public phone: **074 120 3918** (+94 74 120 3918).
 - KeyHome provides both vehicle and household door unlocking.
 
 ## Implemented

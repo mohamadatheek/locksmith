@@ -36,7 +36,7 @@ for (const url of urls) {
     assert.equal(service?.url, url, url + ": missing or incorrect Service schema");
     assert.equal(service.provider["@id"], origin + "/#business", url + ": provider mismatch");
     const business = schemas.find(item => item["@type"] === "Locksmith");
-    assert.equal(business?.telephone, "+94774380935", url + ": phone mismatch");
+    assert.equal(business?.telephone, "+94741203918", url + ": phone mismatch");
     const webpage = schemas.find(item => item["@type"] === "WebPage");
     assert.equal(webpage?.url, url, url + ": missing or incorrect WebPage schema");
     const faq = schemas.find(item => item["@type"] === "FAQPage");
@@ -63,4 +63,17 @@ for (const [pathname, page] of pages) {
 }
 const robots = await readFile("dist/robots.txt", "utf8");
 assert(robots.includes("Sitemap: " + origin + "/sitemap.xml"), "Missing sitemap declaration");
+const keywordTargets = {
+  "/": ["locksmith", "key cutter"],
+  "/car-key-programming-colombo/": ["key programming", "car key programming", "smart key programming", "remote key programming", "lost smart key programming", "car key remote"],
+  "/emergency-car-unlocking/": ["car door unlock service"],
+  "/smart-key-repair/": ["smart key repair"],
+  "/key-cutting-maharagama/": ["key cutting"],
+  "/lock-repair-colombo/": ["lock repair service"],
+  "/door-unlocking-colombo/": ["door lock open service"],
+};
+for (const [pathname, phrases] of Object.entries(keywordTargets)) {
+  const content = pages.get(pathname)?.html.toLowerCase() ?? "";
+  for (const phrase of phrases) assert(content.includes(phrase), pathname + ": missing search topic " + phrase);
+}
 console.log(`SEO checks passed: ${pages.size} prerendered pages, unique metadata, valid schema, internal links and assets.`);
